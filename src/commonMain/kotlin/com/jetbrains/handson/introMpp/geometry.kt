@@ -17,8 +17,8 @@ data class Rect<T>(
  * coordinates and integer image coordinates
  */
 class Transformation(
-  val pixelRect: Rect<Int>,
-  val fractalRect: Rect<Double>
+        val pixelRect: Rect<Int>,
+        val fractalRect: Rect<Double>
 )
 
 inline fun Transformation.forEachPixel(action: (Pixel, Complex) -> Unit) {

@@ -1,6 +1,10 @@
 package com.jetbrains.handson.introMpp
 
 
+import com.jetbrains.handson.introMpp.MandelbrotRender
+import com.jetbrains.handson.introMpp.Rect
+import com.jetbrains.handson.introMpp.jvmHost
+import com.jetbrains.handson.introMpp.jvmPort
 import io.ktor.application.ApplicationCall
 import io.ktor.application.call
 import io.ktor.application.install
@@ -28,8 +32,8 @@ fun ApplicationCall.paramDouble(name: String, def: Double) = param(name, { toDou
 fun ApplicationCall.paramBoolean(name: String, def: Boolean = false) = param(name, { toBoolean() }, def)
 
 fun main() {
-  val host = "127.0.0.1"
-  val port = 8888
+  val host = jvmHost
+  val port = jvmPort
 
   // Ktor HTTP server startup
   // see https://ktor.io for more details

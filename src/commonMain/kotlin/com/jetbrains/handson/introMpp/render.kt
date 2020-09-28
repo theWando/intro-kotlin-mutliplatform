@@ -1,6 +1,5 @@
 package com.jetbrains.handson.introMpp
 
-import java.awt.Color
 
 interface FractalImage {
   val pixelRect: Rect<Int>
@@ -29,7 +28,7 @@ object MandelbrotRender {
             return@run pickColor(z, iterations)
           }
         }
-        Color.BLACK
+        Colors.BLACK
       }
 
       image.putPixel(p, color)

@@ -3,8 +3,8 @@ package com.jetbrains.handson.introMpp
 
 import io.ktor.http.ContentType
 import io.ktor.http.content.OutgoingContent
-import kotlinx.coroutines.io.ByteWriteChannel
-import kotlinx.coroutines.io.jvm.javaio.toOutputStream
+import io.ktor.utils.io.*
+import io.ktor.utils.io.jvm.javaio.*
 import java.awt.Color
 import java.awt.image.BufferedImage
 import javax.imageio.ImageIO

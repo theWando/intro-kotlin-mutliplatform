@@ -1,8 +1,13 @@
 @file:Suppress("SameParameterValue")
 package com.jetbrains.handson.introMpp
 
-import java.awt.Color
 import kotlin.math.ln
+
+object Colors
+
+expect class Color
+expect fun Colors.newColor(r: Int, g: Int, b: Int): Color
+expect val Colors.BLACK : Color
 
 fun pickColor(z: Complex, iterations: Int): Color {
   //we use the number of iterations and the log log
@@ -32,7 +37,7 @@ private fun hslToRGB(hh: Float, ss: Float, ll: Float): Color {
   }
 
   val p = 2 * l - q
-  return Color(
+  return Colors.newColor(
     hueToRGB(p, q, h + 1.0f / 3.0f).normalizedByte,
     hueToRGB(p, q, h).normalizedByte,
     hueToRGB(p, q, h - 1.0f / 3.0f).normalizedByte)
