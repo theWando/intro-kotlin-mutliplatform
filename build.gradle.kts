@@ -1,5 +1,40 @@
+@file:Suppress("UNUSED_VARIABLE")
+
 plugins {
-  kotlin("jvm") version "1.3.40"
+  kotlin("multiplatform") version "1.4.10"
+}
+
+kotlin {
+  jvm()
+  js {
+    browser {}
+  }
+
+  val ktorVersion = "1.4.1"
+  val logbackVersion = "1.2.3"
+  val kotlinXVersion = "0.7.1"
+
+  sourceSets {
+    val jvmMain by getting {
+      dependencies {
+        implementation("io.ktor:ktor-server-netty:$ktorVersion")
+        implementation("io.ktor:ktor-html-builder:$ktorVersion")
+        implementation("ch.qos.logback:logback-classic:$logbackVersion")
+      }
+    }
+
+    val jsMain by getting {
+      dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-html-js:$kotlinXVersion")
+      }
+    }
+
+    val commonMain by getting {
+      dependencies {
+        implementation("org.jetbrains.kotlinx:kotlinx-html-common:$kotlinXVersion")
+      }
+    }
+  }
 }
 
 repositories {
@@ -7,24 +42,17 @@ repositories {
   mavenCentral()
 }
 
-val ktorVersion = "1.2.2"
-val logbackVersion = "1.2.3"
-
-dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-  implementation("io.ktor:ktor-server-netty:$ktorVersion")
-  implementation("io.ktor:ktor-html-builder:$ktorVersion")
-  implementation("ch.qos.logback:logback-classic:$logbackVersion")
-}
-
 val run by tasks.creating(JavaExec::class) {
   group = "application"
-  dependsOn(tasks.classes)
   main = "com.jetbrains.handson.introMpp.MainKt"
-  classpath(
-          { sourceSets["main"].output },
-          { configurations.runtimeClasspath }
-  )
+  kotlin {
+    val main = targets["jvm"].compilations["main"]
+    dependsOn(main.compileAllTaskName)
+    classpath(
+            { main.output.allOutputs.files },
+            { configurations["jvmRuntimeClasspath"] }
+    )
+  }
   ///disable app icon on macOS
   systemProperty("java.awt.headless", "true")
 }
